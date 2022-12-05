@@ -51,6 +51,16 @@ internal class MarkerManager : ViewGroupManager<Marker>() {
     marker.flat = flat
   }
 
+  @ReactProp(name = "lockToScreen")
+  fun setLockToScreen(marker: Marker, lockToScreen: Boolean) {
+    marker.lockToScreen = lockToScreen
+  }
+
+  @ReactProp(name = "title")
+  fun setTitle(marker: Marker, title: String) {
+    marker.title = title
+  }
+
   @ReactProp(name = "opacity")
   override fun setOpacity(marker: Marker, opacity: Float) {
     marker.opacity = opacity

@@ -40,6 +40,20 @@ export interface MarkerProps {
    */
   flat?: boolean;
 
+    /**
+   * 是否固定在屏幕上
+   *
+   * @platform android
+   */
+    lockToScreen?: boolean;
+
+  /**
+   * 
+   * marker 标题
+   * @platform android
+   */
+  title?: string;
+
   /**
    * 层级
    */

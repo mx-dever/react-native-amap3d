@@ -1,6 +1,7 @@
 package qiuxiang.amap3d.map_view
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.view.View
 import com.amap.api.maps.AMap
 import com.amap.api.maps.CameraUpdateFactory
@@ -35,16 +36,22 @@ class MapView(context: ThemedReactContext) : TextureMapView(context) {
     locationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATION_ROTATE_NO_CENTER)
     map.myLocationStyle = locationStyle
 
-    map.setOnMapLoadedListener { emit(id, "onLoad") }
+    map.setOnMapLoadedListener {
+      emit(id, "onLoad")
+      //for ((key, marker) in markerMap) {
+      //  if (marker.lockToScreen) {
+      //    var screenPosition = map.projection.toScreenLocation(map.cameraPosition.target)
+      //    Log.i("", "" + map.cameraPosition.target)
+      //    marker.marker?.setPositionByPixels(screenPosition.x, screenPosition.y)
+      //  }
+      //}
+    }
+
+
     map.setOnMapClickListener { latLng -> emit(id, "onPress", latLng.toJson()) }
     map.setOnPOIClickListener { poi -> emit(id, "onPressPoi", poi.toJson()) }
     map.setOnMapLongClickListener { latLng -> emit(id, "onLongPress", latLng.toJson()) }
     map.setOnPolylineClickListener { polyline -> emit(polylineMap[polyline.id]?.id, "onPress") }
-
-    map.setOnMarkerClickListener { marker ->
-      markerMap[marker.id]?.let { emit(it.id, "onPress") }
-      true
-    }
 
     map.setOnMarkerDragListener(object : AMap.OnMarkerDragListener {
       override fun onMarkerDragStart(marker: Marker) {

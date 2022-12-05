@@ -43,12 +43,20 @@ class Marker(context: Context) : ReactViewGroup(context), Overlay {
       field = value
       marker?.alpha = value
     }
-
+  var lockToScreen: Boolean = false
+    set(value) {
+      field = value
+    }
   var draggable: Boolean = false
     set(value) {
       field = value
       marker?.isDraggable = value
     }
+  var title: String = ""
+  set(value) {
+    field = value
+    marker?.title = value
+  }
 
   fun updateIcon() {
     view?.let {
@@ -83,17 +91,18 @@ class Marker(context: Context) : ReactViewGroup(context), Overlay {
   }
 
   override fun add(map: AMap) {
-    marker = map.addMarker(
-      MarkerOptions()
-        .setFlat(flat)
-        .icon(icon)
-        .alpha(opacity)
-        .draggable(draggable)
-        .position(position)
-        .anchor(anchorX, anchorY)
-        .zIndex(zIndex)
-        .infoWindowEnable(false)
-    )
+      marker = map.addMarker(
+              MarkerOptions()
+                      .setFlat(flat)
+                      .icon(icon)
+                      .alpha(opacity)
+                      .draggable(draggable)
+                      .position(position)
+                      .anchor(anchorX, anchorY)
+                      .title(title)
+                      .zIndex(zIndex)
+                      .infoWindowEnable(false)
+      )
   }
 
   override fun remove() {
