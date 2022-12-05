@@ -1,6 +1,7 @@
 package qiuxiang.amap3d.map_view
 
 import android.annotation.SuppressLint
+import android.util.DisplayMetrics
 import android.util.Log
 import android.view.View
 import com.amap.api.maps.AMap
@@ -18,6 +19,8 @@ import qiuxiang.amap3d.getFloat
 import qiuxiang.amap3d.toJson
 import qiuxiang.amap3d.toLatLng
 import qiuxiang.amap3d.toPoint
+import android.os.Handler;
+
 
 @SuppressLint("ViewConstructor")
 class MapView(context: ThemedReactContext) : TextureMapView(context) {
@@ -38,13 +41,16 @@ class MapView(context: ThemedReactContext) : TextureMapView(context) {
 
     map.setOnMapLoadedListener {
       emit(id, "onLoad")
-      //for ((key, marker) in markerMap) {
-      //  if (marker.lockToScreen) {
-      //    var screenPosition = map.projection.toScreenLocation(map.cameraPosition.target)
-      //    Log.i("", "" + map.cameraPosition.target)
-      //    marker.marker?.setPositionByPixels(screenPosition.x, screenPosition.y)
-      //  }
-      //}
+      for ((key, marker) in markerMap) {
+        if (marker.lockToScreen) {
+          Handler().postDelayed({
+            var screenPosition = map.projection.toScreenLocation(map.cameraPosition.target)
+            marker.marker?.setPositionByPixels(screenPosition.x, screenPosition.y)
+            marker.marker?.showInfoWindow();
+          }, 300)
+
+        }
+      }
     }
 
 

@@ -101,7 +101,7 @@ class Marker(context: Context) : ReactViewGroup(context), Overlay {
                       .anchor(anchorX, anchorY)
                       .title(title)
                       .zIndex(zIndex)
-                      .infoWindowEnable(false)
+                      .infoWindowEnable(true)
       )
   }
 

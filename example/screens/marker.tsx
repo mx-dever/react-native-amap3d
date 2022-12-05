@@ -1,16 +1,21 @@
 import * as React from "react";
 import { MapView, Marker } from "react-native-amap3d";
 
-export default () => (
+const Component = () => {
+  const [title, setTitle] = React.useState('...');
+return (
   <MapView onCameraIdle={({nativeEvent: { cameraPosition }}) => {
-    
+    setTitle('...')
+    setTimeout(() => {
+      setTitle(JSON.stringify(cameraPosition.target));
+    }, 2000);
   }} initialCameraPosition={{
     target: { latitude: 39.806901, longitude: 116.397972 }
   }}>
     <Marker
       draggable
       lockToScreen
-      title="这个是标记点"
+      title={title}
       position={{ latitude: 39.806901, longitude: 116.397972 }}
       icon={require("../images/flag.png")}
       onPress={() => alert("onPress")}
@@ -20,3 +25,6 @@ export default () => (
     />
   </MapView>
 );
+}
+
+export default Component;
