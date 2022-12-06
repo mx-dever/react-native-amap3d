@@ -192,3 +192,12 @@ npm run ios
 
 [npm]: https://www.npmjs.com/package/react-native-amap3d
 [version-badge]: https://img.shields.io/npm/v/react-native-amap3d.svg
+
+
+- 如果是混编需要在Podfile 中加入
+  ```bash
+  use_modular_headers! #置于顶部
+  pod "DoubleConversion", :podspec => "../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec", :modular_headers => false
+  pod "glog", :podspec => "../node_modules/react-native/third-party-podspecs/glog.podspec", :modular_headers => false
+  pod "Folly", :podspec => "../node_modules/react-native/third-party-podspecs/Folly.podspec", :modular_headers => false
+  ```

@@ -26,7 +26,9 @@ class Marker: UIView {
   var icon: UIImage?
   var iconView: UIView?
   var centerOffset: CGPoint?
-
+  var lockToScreen = false
+var title = ""
+    
   @objc var draggable = false { didSet { view?.isDraggable = draggable } }
   @objc var zIndex = 1 { didSet { view?.zIndex = zIndex } }
 
@@ -46,7 +48,19 @@ class Marker: UIView {
   @objc func setLatLng(_ coordinate: CLLocationCoordinate2D) {
     annotation.coordinate = coordinate
   }
-
+    @objc func setLockToScreen(_ lockToScreen: Bool) {
+        self.lockToScreen = lockToScreen
+        annotation.isLockedToScreen = lockToScreen
+        let size = UIScreen.main.bounds.size
+        annotation.lockedScreenPoint = CGPoint(x: size.width/2, y: size.height/2)
+    }
+    @objc func setTitle(_ title: NSString) {
+        annotation.title = String(title)
+        if (self.lockToScreen) {
+            self.view?.setSelected(true, animated: true)
+        }
+    }
+    
   @objc func setCenterOffset(_ centerOffset: CGPoint) {
     self.centerOffset = centerOffset
     view?.centerOffset = centerOffset
@@ -82,6 +96,7 @@ class Marker: UIView {
   func getView() -> MAAnnotationView {
     if view == nil {
       view = MAAnnotationView(annotation: annotation, reuseIdentifier: nil)
+        view?.canShowCallout = true
       if icon == nil, iconView == nil {
         view?.image = MAPinAnnotationView(annotation: annotation, reuseIdentifier: nil).image
       }

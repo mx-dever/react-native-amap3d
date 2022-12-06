@@ -43,14 +43,12 @@ export interface MarkerProps {
     /**
    * 是否固定在屏幕上
    *
-   * @platform android
    */
     lockToScreen?: boolean;
 
   /**
    * 
    * marker 标题
-   * @platform android
    */
   title?: string;
 
